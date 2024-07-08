@@ -5,12 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GymApp"
         mc:Ignorable="d"
-        Title="Workout Sessions" Height="450" Width="800">
+        Title="Gym App" Height="450" Width="800">
     <Grid>
-        <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel x:Name="WorkoutSessionsPanel" Margin="10">
-                <!-- Tu sie coś doda? -->
+        <DockPanel>
+            <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Background="AliceBlue">
+                <TextBlock Text="GYM APP" FontWeight="Bold" FontSize="20" VerticalAlignment="Center" Margin="10">
+                <Menu VerticalAlignment="Center" HorizontalAlignment="Right">
+                    <MenuItem Header="Training" Click="TrainingMenu_Click" />
+                    <MenuItem Header="Log Book" Click="LogBookMenu_Click" />
+                    <MenuItem Header="Statistics" Click="StatisticsMenu_Click" />
+                </Menu>
+                </TextBlock>
             </StackPanel>
-        </ScrollViewer>
+            <Frame x:Name="MainFrame" NavigationUIVisibility="Hidden"/>
+        </DockPanel>
     </Grid>
 </Window>

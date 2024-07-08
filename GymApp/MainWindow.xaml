@@ -8,7 +8,7 @@
         Title="Workout Sessions" Height="450" Width="800">
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel x:Name="WorkoutSessionPanel" Margin="10">
+            <StackPanel x:Name="WorkoutSessionsPanel" Margin="10">
                 <!-- Tu sie coś doda? -->
             </StackPanel>
         </ScrollViewer>

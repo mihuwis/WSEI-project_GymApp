@@ -8,7 +8,14 @@ namespace GymApp.Models
 {
     public class WorkoutSession
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int WorkoutSessionId { get; set; }
+
+        public DateTime TimeStarted { get; set; }
+
+        public DateTime TimeFinished { get; set; }
+
+        public List<ExerciseSet> ExerciseSets { get; set; }
+
+
     }
 }

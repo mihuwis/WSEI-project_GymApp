@@ -7,6 +7,10 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel x:Name="WorkoutSessionPanel" Margin="10">
+                <!-- Tu sie coś doda? -->
+            </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Window>

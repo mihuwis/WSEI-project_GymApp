@@ -16,7 +16,8 @@ namespace GymApp.Models
 
         public List<BodyPart> BodyParts { get; set; }
 
-        public Exercise(int exerciseId, string exerciseName, TrainingEquipement trainingEquipement, List<BodyPart> bodyParts)
+        public Exercise(int exerciseId, string exerciseName, 
+            TrainingEquipement trainingEquipement, List<BodyPart> bodyParts)
         {
             ExerciseId = exerciseId;
             ExerciseName = exerciseName;

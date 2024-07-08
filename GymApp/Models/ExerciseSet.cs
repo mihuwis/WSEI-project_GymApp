@@ -21,5 +21,11 @@ namespace GymApp.Models
             ExerciseSetId = exerciseSetId;
             ExerciseExecuted = exerciseExecuted;
         }
+
+        public ExerciseSet(int exerciseSetId, Exercise exerciseExecuted, int repetitions, float weight) : this(exerciseSetId, exerciseExecuted)
+        {
+            Repetitions = repetitions;
+            Weight = weight;
+        }
     }
 }

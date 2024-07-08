@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GymApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Workout Sessions" Height="450" Width="800">
     <Grid>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
             <StackPanel x:Name="WorkoutSessionPanel" Margin="10">

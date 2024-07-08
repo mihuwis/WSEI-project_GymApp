@@ -47,7 +47,7 @@ namespace GymApp.Context
                 new Exercise(6, "Triceps pull downs w/ band", TrainingEquipements[3], new List<BodyPart> { BodyParts[7] }),
                 new Exercise(7, "Dead Lift", TrainingEquipements[0], new List<BodyPart> { BodyParts[2], BodyParts[4] }),
             };
-
+            Workouts = new List<WorkoutSession>();
 
             WorkoutSession session001 = new WorkoutSession()
             {
@@ -67,6 +67,29 @@ namespace GymApp.Context
             // Dead Lift 2 set
             session001.ExerciseSets.Add(new ExerciseSet(6, Exercises[6], 5, 104));
             session001.ExerciseSets.Add(new ExerciseSet(7, Exercises[6], 5, 104));
+
+            Workouts.Add(session001);
+
+            WorkoutSession session002 = new WorkoutSession()
+            {
+                WorkoutSessionId = 2,
+                TimeStarted = new DateTime(2023, 9, 27, 19, 27, 10, 10),
+                TimeFinished = new DateTime(2023, 9, 27, 19, 47, 19, 28)
+            };
+            // Bench press 2 set
+            session001.ExerciseSets.Add(new ExerciseSet(8, Exercises[0], 12, 54));
+            session001.ExerciseSets.Add(new ExerciseSet(9, Exercises[0], 10, 54));
+
+            // SQ 3 set
+            session001.ExerciseSets.Add(new ExerciseSet(10, Exercises[2], 6, 74));
+            session001.ExerciseSets.Add(new ExerciseSet(11, Exercises[2], 2, 94));
+            session001.ExerciseSets.Add(new ExerciseSet(12, Exercises[2], 5, 74));
+
+            // triceps pulldown 
+            session001.ExerciseSets.Add(new ExerciseSet(13, Exercises[5], 12, 10));
+            session001.ExerciseSets.Add(new ExerciseSet(14, Exercises[5], 11, 10));
+
+            Workouts.Add(session002);
         }
     }
 }

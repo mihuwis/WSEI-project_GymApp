@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using GymApp.Context;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -16,14 +17,24 @@ namespace GymApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private BootstrapDB _databaseFake;
         public MainWindow()
         {
             InitializeComponent();
+            _databaseFake = new BootstrapDB();
+            LoadWorkoutSessions();
         }
 
-        private void myButton_Click(object sender, RoutedEventArgs e)
+        private void LoadWorkoutSessions()
         {
-            MessageBox.Show("Button clicked!");
+            foreach(var sessions in _databaseFake.Workouts)
+            {
+                var sessionPanel = new StackPanel
+                {
+                    Background = Brushes.LightGreen,
+                    Margin = new Thickness(0, 5, 0, 5)
+                };
+            }
         }
     }
 }

@@ -29,8 +29,9 @@ namespace GymApp
             LoadWorkoutSessions();
         }
 
-        private void LoadWorkoutSessions()
+        public void LoadWorkoutSessions()
         {
+            WorkoutSessionsPanel.Children.Clear();
             foreach (var session in _database.Workouts)
             {
                 var sessionPanel = new StackPanel

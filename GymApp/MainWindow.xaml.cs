@@ -25,7 +25,8 @@ namespace GymApp
         {
             InitializeComponent();
             _serviceProvider = ((App)Application.Current).ServiceProvider;
-            MainFrame.Navigate(_serviceProvider.GetRequiredService<LogBookPage>());
+            NavigateToLogBookPage();
+            //MainFrame.Navigate(_serviceProvider.GetRequiredService<LogBookPage>());
         }
 
 
@@ -44,7 +45,12 @@ namespace GymApp
             MainFrame.Navigate(_serviceProvider.GetRequiredService<StatisticsPage>());
         }
 
+        private void NavigateToLogBookPage()
+        {
+            var logBookPage = _serviceProvider.GetRequiredService<LogBookPage>();
+            logBookPage.LoadWorkoutSessions(); // reload powinien polecieć 
+            MainFrame.Navigate(logBookPage);
+        }
 
-    
     }
 }

@@ -83,5 +83,56 @@ namespace GymApp
             TimerTextBlock.Text = string.Empty;
             _currentExerciseSets.Clear();
         }
+
+        private void AddExerciseSetControl()
+        {
+            var exerciseSetPanel = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(5) };
+
+            var exerciseComboBox = new ComboBox
+            {
+                Width = 150,
+                ItemsSource = _database.Exercises,
+                DisplayMemberPath = "ExerciseName"
+            };
+            exerciseSetPanel.Children.Add(exerciseComboBox);
+
+            var weightTextBox = new TextBox
+            {
+                Width = 50,
+                Margin = new Thickness(5, 0, 0, 0),
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            exerciseSetPanel.Children.Add(weightTextBox);
+
+            var repetitionsTextBox = new TextBox
+            {
+                Width = 50,
+                Margin = new Thickness(5, 0, 0, 0),
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            exerciseSetPanel.Children.Add(repetitionsTextBox);
+
+            exerciseSetPanel.Children.Add(new Button
+            {
+                Content = "Save",
+                Margin = new Thickness(5, 0, 0, 0),
+                VerticalAlignment = VerticalAlignment.Center,
+                Tag = new Action(() =>
+                {
+                    var selectedExercise = (Exercise)exerciseComboBox.SelectedItem;
+                    if (selectedExercise != null &&
+                        int.TryParse(weightTextBox.Text, out var weight) &&
+                        int.TryParse(repetitionsTextBox.Text, out var repetitions))
+                    {
+                        _currentExerciseSets.Add(new ExerciseSet(_currentExerciseSets.Count + 1, selectedExercise, repetitions, weight));
+                        exerciseComboBox.IsEnabled = false;
+                        weightTextBox.IsEnabled = false;
+                        repetitionsTextBox.IsEnabled = false;
+                    }
+                })
+            });
+
+            ExerciseSetsPanel.Children.Add(exerciseSetPanel);
+        }
     }
 }

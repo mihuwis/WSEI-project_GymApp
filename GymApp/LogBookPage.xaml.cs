@@ -21,17 +21,17 @@ namespace GymApp
     /// </summary>
     public partial class LogBookPage : Page
     {
-        private BootstrapDB _databaseFake;
-        public LogBookPage()
+        private BootstrapDB _database;
+        public LogBookPage(BootstrapDB database)
         {
             InitializeComponent();
-            _databaseFake = new BootstrapDB();
+            _database = database;
             LoadWorkoutSessions();
         }
 
         private void LoadWorkoutSessions()
         {
-            foreach (var session in _databaseFake.Workouts)
+            foreach (var session in _database.Workouts)
             {
                 var sessionPanel = new StackPanel
                 {

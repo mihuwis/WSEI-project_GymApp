@@ -10,6 +10,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GymApp
 {
@@ -18,27 +19,29 @@ namespace GymApp
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ServiceProvider _serviceProvider;
 
         public MainWindow()
         {
             InitializeComponent();
-            MainFrame.Navigate(new LogBookPage());
+            _serviceProvider = ((App)Application.Current).ServiceProvider;
+            MainFrame.Navigate(_serviceProvider.GetRequiredService<LogBookPage>());
         }
 
 
         private void TrainingMenu_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new TrainingPage());
+            MainFrame.Navigate(_serviceProvider.GetRequiredService<TrainingPage>());
         }
 
         private void LogBookMenu_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new LogBookPage());
+            MainFrame.Navigate(_serviceProvider.GetRequiredService<LogBookPage>());
         }
 
         private void StatisticsMenu_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(new StatisticsPage());
+            MainFrame.Navigate(_serviceProvider.GetRequiredService<StatisticsPage>());
         }
 
 

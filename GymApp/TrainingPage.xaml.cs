@@ -27,10 +27,11 @@ namespace GymApp
         private DispatcherTimer _timer;
         private DateTime _sessionStartTime;
         private List<ExerciseSet> _currentExerciseSets;
-        public TrainingPage()
+
+        public TrainingPage(BootstrapDB database)
         {
             InitializeComponent();
-            _database = new BootstrapDB();
+            _database = database;
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += Timer_Tick;

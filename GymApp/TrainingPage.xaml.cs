@@ -43,6 +43,45 @@ namespace GymApp
             _timer.Start();
             TimerTextBlock.Text = "00:00:00";
             StartSessionButton.Visibility = Visibility.Collapsed;
+            AddMoreSetsButton.Visibility = Visibility.Visible;
+            StopSessionButton.Visibility = Visibility.Visible;
+            ExerciseSetsPanel.Visibility = Visibility.Visible;
+            AddExerciseSetControl();
+        }
+
+        private void Timer_Tick(object sender, EventArgs e)
+        {
+            var actualTimeOfSession = DateTime.Now - _sessionStartTime;
+            TimerTextBlock.Text = actualTimeOfSession.ToString(@"hh\:mm\:ss");
+        }
+
+        private void AddMoreSetsButton_Click(object sender, RoutedEventArgs e)
+        {
+            AddExerciseSetControl();
+        }
+
+        private void StopSessionButton_Click(object sender, RoutedEventArgs e)
+        {
+            _timer.Stop();
+            var sessionEndTime = DateTime.Now;
+            var workoutSession = new WorkoutSession
+            {
+                WorkoutSessionId = _database.Workouts.Count + 1,
+                TimeStarted = _sessionStartTime,
+                TimeFinished = sessionEndTime,
+                ExerciseSets = _currentExerciseSets
+            };
+            _database.Workouts.Add(workoutSession);
+            MessageBox.Show("Training session saved!");
+
+            // Reset UI
+            StartSessionButton.Visibility = Visibility.Visible;
+            AddMoreSetsButton.Visibility = Visibility.Collapsed;
+            StopSessionButton.Visibility = Visibility.Collapsed;
+            ExerciseSetsPanel.Visibility = Visibility.Collapsed;
+            ExerciseSetsPanel.Children.Clear();
+            TimerTextBlock.Text = string.Empty;
+            _currentExerciseSets.Clear();
         }
     }
 }

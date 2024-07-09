@@ -1,4 +1,6 @@
-﻿using System;
+﻿using GymApp.Context;
+using GymApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace GymApp
 {
@@ -20,9 +23,26 @@ namespace GymApp
     /// </summary>
     public partial class TrainingPage : Page
     {
+        private BootstrapDB _database;
+        private DispatcherTimer _timer;
+        private DateTime _sessionStartTime;
+        private List<ExerciseSet> _currentExerciseSets;
         public TrainingPage()
         {
             InitializeComponent();
+            _database = new BootstrapDB();
+            _timer = new DispatcherTimer();
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += Timer_Tick;
+            _currentExerciseSets = new List<ExerciseSet>();
+        }
+
+        private void StartSessionButton_Click(object sender, RoutedEventArgs e)
+        {
+            _sessionStartTime = DateTime.Now;
+            _timer.Start();
+            TimerTextBlock.Text = "00:00:00";
+            StartSessionButton.Visibility = Visibility.Collapsed;
         }
     }
 }

@@ -9,7 +9,14 @@
       Title="TrainingPage">
 
     <Grid>
-        <TextBlock Text="Training Page" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="24"/>
-
+        <StackPanel Margin="10">
+            <Button x:Name="StartSessionButton" Content="Start Training Session" Click="StartSessionButton_Click" Margin="5"/>
+            <TextBlock x:Name="TimerTextBlock" FontSize="24" Margin="5"/>
+            <StackPanel x:Name="ExerciseSetsPanel" Visibility="Collapsed">
+                <!-- dodawaj tu ćwiczenia -->
+            </StackPanel>
+            <Button x:Name="AddMoreSetsButton" Content="Add More Sets/Exercises" Click="AddMoreSetsButton_Click" Visibility="Collapsed" Margin="5"/>
+            <Button x:Name="StopSessionButton" Content="Stop Session" Click="StopSessionButton_Click" Visibility="Collapsed" Margin="5"/>
+        </StackPanel>
     </Grid>
 </Page>

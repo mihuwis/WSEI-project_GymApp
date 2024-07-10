@@ -134,8 +134,16 @@ namespace GymApp
                 VerticalAlignment = VerticalAlignment.Center
             };
 
+            var errorTextBlock = new TextBlock
+            {
+                Foreground = Brushes.Red,
+                Visibility = Visibility.Collapsed
+            };
+            exerciseSetPanel.Children.Add(errorTextBlock);
+
             saveButton.Click += (s, e) =>
             {
+                errorTextBlock.Visibility = Visibility.Collapsed;
                 var selectedExercise = (Exercise)exerciseComboBox.SelectedItem;
                 if (selectedExercise != null &&
                     int.TryParse(weightTextBox.Text, out var weight) &&
@@ -146,6 +154,11 @@ namespace GymApp
                     weightTextBox.IsEnabled = false;
                     repetitionsTextBox.IsEnabled = false;
                     saveButton.IsEnabled = false;
+                }
+                else
+                {
+                    errorTextBlock.Text = "Value must be a number";
+                    errorTextBlock.Visibility = Visibility.Visible;
                 }
             };
 

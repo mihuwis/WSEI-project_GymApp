@@ -97,14 +97,27 @@ namespace GymApp
             };
             exerciseSetPanel.Children.Add(exerciseComboBox);
 
+            var weightLabel = new TextBlock
+            {
+                Text = "Weight:",
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            exerciseSetPanel.Children.Add(weightLabel);
+
             var weightTextBox = new TextBox
             {
-                Text = "Kg",
                 Width = 50,
                 Margin = new Thickness(5, 0, 0, 0),
                 VerticalAlignment = VerticalAlignment.Center
             };
             exerciseSetPanel.Children.Add(weightTextBox);
+
+            var repsLabel = new TextBlock
+            {
+                Text = "reps:",
+                VerticalAlignment = VerticalAlignment.Center
+            };
+            exerciseSetPanel.Children.Add(repsLabel);
 
             var repetitionsTextBox = new TextBox
             {

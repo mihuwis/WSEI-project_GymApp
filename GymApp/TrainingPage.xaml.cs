@@ -18,12 +18,11 @@ using System.Windows.Threading;
 
 namespace GymApp
 {
-    /// <summary>
-    /// Interaction logic for TrainingPage.xaml
-    /// </summary>
+
+
     public partial class TrainingPage : Page
     {
-        private BootstrapDB _database;
+        private readonly BootstrapDB _database;
         private DispatcherTimer _timer;
         private DateTime _sessionStartTime;
         private List<ExerciseSet> _currentExerciseSets;
@@ -52,8 +51,8 @@ namespace GymApp
 
         private void Timer_Tick(object sender, EventArgs e)
         {
-            var actualTimeOfSession = DateTime.Now - _sessionStartTime;
-            TimerTextBlock.Text = actualTimeOfSession.ToString(@"hh\:mm\:ss");
+            var elapsed = DateTime.Now - _sessionStartTime;
+            TimerTextBlock.Text = elapsed.ToString(@"hh\:mm\:ss");
         }
 
         private void AddMoreSetsButton_Click(object sender, RoutedEventArgs e)
@@ -70,10 +69,9 @@ namespace GymApp
                 WorkoutSessionId = _database.Workouts.Count + 1,
                 TimeStarted = _sessionStartTime,
                 TimeFinished = sessionEndTime,
-                ExerciseSets = _currentExerciseSets
+                ExerciseSets = new List<ExerciseSet>(_currentExerciseSets) 
             };
-            MessageBox.Show($"Excercise set count: {_currentExerciseSets.Count}");
-            MessageBox.Show($"Excercise set count: {_currentExerciseSets[0].Exercise.ExerciseName}");
+
             _database.Workouts.Add(workoutSession);
             MessageBox.Show("Training session saved!");
 
@@ -101,6 +99,7 @@ namespace GymApp
 
             var weightTextBox = new TextBox
             {
+                Text = "Kg",
                 Width = 50,
                 Margin = new Thickness(5, 0, 0, 0),
                 VerticalAlignment = VerticalAlignment.Center
@@ -114,7 +113,6 @@ namespace GymApp
                 VerticalAlignment = VerticalAlignment.Center
             };
             exerciseSetPanel.Children.Add(repetitionsTextBox);
-
 
             var saveButton = new Button
             {

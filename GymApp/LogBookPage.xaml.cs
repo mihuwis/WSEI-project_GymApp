@@ -1,14 +1,8 @@
 ﻿using GymApp.Context;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -16,9 +10,6 @@ using System.Windows.Shapes;
 
 namespace GymApp
 {
-    /// <summary>
-    /// Interaction logic for LogBookPage.xaml
-    /// </summary>
     public partial class LogBookPage : Page
     {
         private readonly BootstrapDB _database;
@@ -43,7 +34,7 @@ namespace GymApp
 
                 var sessionHeader = new TextBlock
                 {
-                    Text = session.TimeStarted.ToString("yyyy-MM-dd"),
+                    Text = session.TimeStarted.ToString("yyyy-MM-dd HH:mm"),
                     FontWeight = FontWeights.Bold,
                     Margin = new Thickness(5)
                 };
@@ -58,9 +49,7 @@ namespace GymApp
                 {
                     var exerciseText = new TextBlock
                     {
-                        Text = $"{exerciseSet.Exercise.ExerciseName} - " +
-                        $"{exerciseSet.Weight}kg x " +
-                        $"{exerciseSet.Repetitions} reps",
+                        Text = $"{exerciseSet.Exercise.ExerciseName} - {exerciseSet.Weight}kg x {exerciseSet.Repetitions} reps",
                         Margin = new Thickness(10, 0, 0, 0)
                     };
                     exercisesPanel.Children.Add(exerciseText);
@@ -73,9 +62,9 @@ namespace GymApp
                     exercisesPanel.Visibility = exercisesPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
                 };
 
-
                 WorkoutSessionsPanel.Children.Add(sessionPanel);
             }
         }
     }
+
 }

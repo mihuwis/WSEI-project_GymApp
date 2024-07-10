@@ -26,7 +26,6 @@ namespace GymApp
             InitializeComponent();
             _serviceProvider = ((App)Application.Current).ServiceProvider;
             NavigateToLogBookPage();
-            //MainFrame.Navigate(_serviceProvider.GetRequiredService<LogBookPage>());
         }
 
 
@@ -37,7 +36,7 @@ namespace GymApp
 
         private void LogBookMenu_Click(object sender, RoutedEventArgs e)
         {
-            MainFrame.Navigate(_serviceProvider.GetRequiredService<LogBookPage>());
+            NavigateToLogBookPage();
         }
 
         private void StatisticsMenu_Click(object sender, RoutedEventArgs e)

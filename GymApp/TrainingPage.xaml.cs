@@ -72,6 +72,8 @@ namespace GymApp
                 TimeFinished = sessionEndTime,
                 ExerciseSets = _currentExerciseSets
             };
+            MessageBox.Show($"Excercise set count: {_currentExerciseSets.Count}");
+            MessageBox.Show($"Excercise set count: {_currentExerciseSets[0].Exercise.ExerciseName}");
             _database.Workouts.Add(workoutSession);
             MessageBox.Show("Training session saved!");
 
@@ -113,25 +115,30 @@ namespace GymApp
             };
             exerciseSetPanel.Children.Add(repetitionsTextBox);
 
-            exerciseSetPanel.Children.Add(new Button
+
+            var saveButton = new Button
             {
                 Content = "Save",
                 Margin = new Thickness(5, 0, 0, 0),
-                VerticalAlignment = VerticalAlignment.Center,
-                Tag = new Action(() =>
+                VerticalAlignment = VerticalAlignment.Center
+            };
+
+            saveButton.Click += (s, e) =>
+            {
+                var selectedExercise = (Exercise)exerciseComboBox.SelectedItem;
+                if (selectedExercise != null &&
+                    int.TryParse(weightTextBox.Text, out var weight) &&
+                    int.TryParse(repetitionsTextBox.Text, out var repetitions))
                 {
-                    var selectedExercise = (Exercise)exerciseComboBox.SelectedItem;
-                    if (selectedExercise != null &&
-                        int.TryParse(weightTextBox.Text, out var weight) &&
-                        int.TryParse(repetitionsTextBox.Text, out var repetitions))
-                    {
-                        _currentExerciseSets.Add(new ExerciseSet(_currentExerciseSets.Count + 1, selectedExercise, repetitions, weight));
-                        exerciseComboBox.IsEnabled = false;
-                        weightTextBox.IsEnabled = false;
-                        repetitionsTextBox.IsEnabled = false;
-                    }
-                })
-            });
+                    _currentExerciseSets.Add(new ExerciseSet(_currentExerciseSets.Count + 1, selectedExercise, repetitions, weight));
+                    exerciseComboBox.IsEnabled = false;
+                    weightTextBox.IsEnabled = false;
+                    repetitionsTextBox.IsEnabled = false;
+                    saveButton.IsEnabled = false;
+                }
+            };
+
+            exerciseSetPanel.Children.Add(saveButton);
 
             ExerciseSetsPanel.Children.Add(exerciseSetPanel);
         }

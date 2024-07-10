@@ -10,7 +10,7 @@ namespace GymApp.Models
     {
         public int ExerciseSetId { get; set; }
 
-        public Exercise ExerciseExecuted { get; set; }
+        public Exercise Exercise { get; set; }
 
         public int Repetitions { get; set; }
 
@@ -19,7 +19,7 @@ namespace GymApp.Models
         public ExerciseSet(int exerciseSetId, Exercise exerciseExecuted)
         {
             ExerciseSetId = exerciseSetId;
-            ExerciseExecuted = exerciseExecuted;
+            Exercise = exerciseExecuted;
         }
 
         public ExerciseSet(int exerciseSetId, Exercise exerciseExecuted, int repetitions, float weight) : this(exerciseSetId, exerciseExecuted)

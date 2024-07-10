@@ -21,7 +21,8 @@ namespace GymApp
     /// </summary>
     public partial class LogBookPage : Page
     {
-        private BootstrapDB _database;
+        private readonly BootstrapDB _database;
+
         public LogBookPage(BootstrapDB database)
         {
             InitializeComponent();
@@ -48,28 +49,28 @@ namespace GymApp
                 };
                 sessionPanel.Children.Add(sessionHeader);
 
-                var exercisePanel = new StackPanel
+                var exercisesPanel = new StackPanel
                 {
-                    Visibility = Visibility.Collapsed,
+                    Visibility = Visibility.Collapsed
                 };
 
                 foreach (var exerciseSet in session.ExerciseSets)
                 {
                     var exerciseText = new TextBlock
                     {
-                        Text = $"{exerciseSet.ExerciseExecuted.ExerciseName} - " +
+                        Text = $"{exerciseSet.Exercise.ExerciseName} - " +
                         $"{exerciseSet.Weight}kg x " +
                         $"{exerciseSet.Repetitions} reps",
                         Margin = new Thickness(10, 0, 0, 0)
                     };
-                    exercisePanel.Children.Add(exerciseText);
+                    exercisesPanel.Children.Add(exerciseText);
                 }
 
-                sessionPanel.Children.Add(exercisePanel);
+                sessionPanel.Children.Add(exercisesPanel);
 
                 sessionPanel.MouseLeftButtonUp += (sender, e) =>
                 {
-                    exercisePanel.Visibility = exercisePanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
+                    exercisesPanel.Visibility = exercisesPanel.Visibility == Visibility.Collapsed ? Visibility.Visible : Visibility.Collapsed;
                 };
 
 

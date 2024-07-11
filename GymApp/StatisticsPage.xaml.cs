@@ -23,6 +23,11 @@ namespace GymApp
         {
             InitializeComponent();
             _database = database;
+
+            EndDatePicker.SelectedDate = DateTime.Now;
+            StartDatePicker.SelectedDate = DateTime.Now.AddMonths(-3);
+
+            DisplayStatisticsForDefaultDateRange();
         }
 
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
@@ -39,6 +44,19 @@ namespace GymApp
                 DisplayStatistics(filteredSessions);
             }
         }
+
+        private void DisplayStatisticsForDefaultDateRange()
+        {
+            DateTime startDate = StartDatePicker.SelectedDate ?? DateTime.Now.AddMonths(-3);
+            DateTime endDate = EndDatePicker.SelectedDate ?? DateTime.Now;
+
+            var filteredSessions = _database.Workouts
+                .Where(session => session.TimeStarted.Date >= startDate && session.TimeStarted.Date <= endDate)
+                .ToList();
+
+            DisplayStatistics(filteredSessions);
+        }
+
         private void DisplayStatistics(List<WorkoutSession> sessions)
         {
             // Display the number of training sessions
@@ -104,14 +122,6 @@ namespace GymApp
 
             var seriesCollection = new SeriesCollection();
 
-            // Add column series for the number of sets
-            var columnSeries = new ColumnSeries
-            {
-                Title = "Number of Sets",
-                Values = new ChartValues<int>(sessions.Select(session => session.ExerciseSets.Count))
-            };
-            seriesCollection.Add(columnSeries);
-
             // Add line series for the total load
             var lineSeries = new LineSeries
             {
@@ -138,12 +148,7 @@ namespace GymApp
                 {
                     new Axis
                     {
-                        Title = "Number of Sets"
-                    },
-                    new Axis
-                    {
                         Title = "Total Load (kg)",
-                        Position = AxisPosition.RightTop
                     }
                 }
             };

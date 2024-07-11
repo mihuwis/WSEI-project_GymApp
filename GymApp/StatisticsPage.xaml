@@ -6,35 +6,37 @@
       mc:Ignorable="d"
       Title="Statistics">
     <Grid>
-        <StackPanel Margin="10">
-            <TextBlock Text="Select Date Range:" FontWeight="Bold" Margin="0,0,0,5"/>
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <DatePicker x:Name="StartDatePicker" SelectedDateChanged="DatePicker_SelectedDateChanged" Width="150" Margin="0,0,10,0"/>
-                <DatePicker x:Name="EndDatePicker" SelectedDateChanged="DatePicker_SelectedDateChanged" Width="150"/>
-            </StackPanel>
-
-            <TextBlock x:Name="TrainingSessionsTextBlock" Text="Training Sessions: " FontWeight="Bold" Margin="0,0,0,5"/>
-            <TextBlock Text="Total Load per Session:" FontWeight="Bold" Margin="0,0,0,5"/>
-            <ListBox x:Name="TotalLoadListBox" Margin="0,0,0,10"/>
-
-            <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-                <StackPanel>
-                    <TextBlock Text="Session with Biggest Load:" FontWeight="Bold" Margin="0,0,0,5"/>
-                    <TextBlock x:Name="BiggestLoadTextBlock" Margin="0,0,0,5"/>
+        <ScrollViewer VerticalScrollBarVisibility="Auto">
+            <StackPanel Margin="10">
+                <TextBlock Text="Select Date Range:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <DatePicker x:Name="StartDatePicker" SelectedDateChanged="DatePicker_SelectedDateChanged" Width="150" Margin="0,0,10,0"/>
+                    <DatePicker x:Name="EndDatePicker" SelectedDateChanged="DatePicker_SelectedDateChanged" Width="150"/>
                 </StackPanel>
-                <StackPanel Margin="20,0,0,0">
-                    <TextBlock Text="Highest Density Session (kg/min):" FontWeight="Bold" Margin="0,0,0,5"/>
-                    <TextBlock x:Name="HighestDensityTextBlock" Margin="0,0,0,5"/>
+
+                <TextBlock x:Name="TrainingSessionsTextBlock" Text="Training Sessions: " FontWeight="Bold" Margin="0,0,0,5"/>
+                <TextBlock Text="Total Load per Session:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <ListBox x:Name="TotalLoadListBox" Margin="0,0,0,10"/>
+
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <StackPanel>
+                        <TextBlock Text="Session with Biggest Load:" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <TextBlock x:Name="BiggestLoadTextBlock" Margin="0,0,0,5"/>
+                    </StackPanel>
+                    <StackPanel Margin="20,0,0,0">
+                        <TextBlock Text="Highest Density Session (kg/min):" FontWeight="Bold" Margin="0,0,0,5"/>
+                        <TextBlock x:Name="HighestDensityTextBlock" Margin="0,0,0,5"/>
+                    </StackPanel>
                 </StackPanel>
+
+                <TextBlock Text="Best Results for Each Exercise:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <ListBox x:Name="BestResultsListBox" Margin="0,0,0,10"/>
+
+                <TextBlock Text="Training Load per session:" FontWeight="Bold" Margin="0,0,0,5"/>
+                <Grid x:Name="ChartGrid" Height="400" Margin="0,0,0,10">
+                    <!-- Chart will be dynamically added here -->
+                </Grid>
             </StackPanel>
-
-            <TextBlock Text="Best Results for Each Exercise:" FontWeight="Bold" Margin="0,0,0,5"/>
-            <ListBox x:Name="BestResultsListBox" Margin="0,0,0,10"/>
-
-            <TextBlock Text="Training Summary Chart:" FontWeight="Bold" Margin="0,0,0,5"/>
-            <Grid x:Name="ChartGrid" Height="400" Margin="0,0,0,10">
-                <!-- Chart will be dynamically added here -->
-            </Grid>
-        </StackPanel>
+        </ScrollViewer>
     </Grid>
 </Page>

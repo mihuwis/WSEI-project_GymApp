@@ -9,6 +9,7 @@ namespace GymApp
     public partial class App : Application
     {
         private ServiceProvider serviceProvider;
+        private static Mutex mutex = null;
 
         public App()
         {
@@ -28,8 +29,31 @@ namespace GymApp
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            const string appName = "GymApp";
+            bool createdNew;
+
+            mutex = new Mutex(true, appName, out createdNew);
+
+            if (!createdNew)
+            {
+                // The application is already running
+                Application.Current.Shutdown();
+                return;
+            }
+
             var mainWindow = serviceProvider.GetService<MainWindow>();
             mainWindow.Show();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            if (mutex != null)
+            {
+                mutex.ReleaseMutex();
+                mutex = null;
+            }
+
+            base.OnExit(e);
         }
 
         public ServiceProvider ServiceProvider => serviceProvider;

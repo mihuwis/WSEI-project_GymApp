@@ -9,8 +9,9 @@
       Title="Log Book">
 
     <Grid>
+        <TextBlock Text="History of training sessions:" FontWeight="Bold" Margin="10,10,10,20"/>
         <ScrollViewer VerticalScrollBarVisibility="Auto">
-            <StackPanel x:Name="WorkoutSessionsPanel" Margin="10">
+            <StackPanel x:Name="WorkoutSessionsPanel" Margin="20" HorizontalAlignment="Left">
                 <!-- lista tutaj jest generowana (jak dobrze pójdzie) -->
             </StackPanel>
         </ScrollViewer>

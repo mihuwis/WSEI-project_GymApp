@@ -28,13 +28,18 @@ namespace GymApp
             {
                 var sessionPanel = new StackPanel
                 {
-                    Background = Brushes.LightGreen,
-                    Margin = new Thickness(0, 5, 0, 5)
+                    MaxWidth = 600,
+                    Margin = new Thickness(0, 5, 0, 5),
+                    Background = new LinearGradientBrush(
+                        Colors.LightGreen,
+                        Colors.White,
+                        new Point(0, 0),
+                        new Point(1, 0)) // Gradient z lewej do prawej 
                 };
 
                 var sessionHeader = new TextBlock
                 {
-                    Text = session.TimeStarted.ToString("yyyy-MM-dd HH:mm"),
+                    Text = $"Training: {session.TimeStarted.ToString("yyyy-MM-dd HH:mm")}", 
                     FontWeight = FontWeights.Bold,
                     Margin = new Thickness(5)
                 };

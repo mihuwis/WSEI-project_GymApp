@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace GymApp.Models
 {
     public class Exercise
     {
+        [Key]
         public int ExerciseId { get; set; }
 
         public string ExerciseName { get; set;}

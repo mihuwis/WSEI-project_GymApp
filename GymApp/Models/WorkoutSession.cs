@@ -19,6 +19,8 @@ namespace GymApp.Models
 
         public List<ExerciseSet> ExerciseSets { get; set; }
 
+        
+
         public WorkoutSession()
         {
             ExerciseSets = new List<ExerciseSet>();

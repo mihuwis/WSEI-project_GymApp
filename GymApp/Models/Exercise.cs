@@ -19,6 +19,8 @@ namespace GymApp.Models
 
         public List<BodyPart> BodyParts { get; set; }
 
+        public Exercise() { }
+
         public Exercise(int exerciseId, string exerciseName, 
             TrainingEquipement trainingEquipement, List<BodyPart> bodyParts)
         {

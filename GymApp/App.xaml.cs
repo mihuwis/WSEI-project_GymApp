@@ -1,11 +1,11 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using System.Windows;
-using GymApp.Context;
+using GymApp.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 
 namespace GymApp
 {
-
     public partial class App : Application
     {
         private ServiceProvider serviceProvider;
@@ -18,9 +18,10 @@ namespace GymApp
             serviceProvider = services.BuildServiceProvider();
         }
 
-        public void ConfigureServices(ServiceCollection services)
+        private void ConfigureServices(ServiceCollection services)
         {
-            services.AddSingleton<BootstrapDB>(); // Ensure BootstrapDB is singleton
+            services.AddDbContext<GymAppContext>(options =>
+                options.UseSqlite("Data Source=gymapp.db")); // Configure SQLite
             services.AddSingleton<MainWindow>();
             services.AddTransient<LogBookPage>();
             services.AddTransient<TrainingPage>();
@@ -58,5 +59,4 @@ namespace GymApp
 
         public ServiceProvider ServiceProvider => serviceProvider;
     }
-
 }

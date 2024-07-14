@@ -1,4 +1,5 @@
-﻿using GymApp.Context;
+﻿using GymApp.Data;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
 using System.Windows;
@@ -12,19 +13,26 @@ namespace GymApp
 {
     public partial class LogBookPage : Page
     {
-        private readonly BootstrapDB _database;
+        private readonly GymAppContext _context;
 
-        public LogBookPage(BootstrapDB database)
+        public LogBookPage(GymAppContext context)
         {
             InitializeComponent();
-            _database = database;
+            _context = context;
             LoadWorkoutSessions();
         }
 
         public void LoadWorkoutSessions()
         {
             WorkoutSessionsPanel.Children.Clear();
-            foreach (var session in _database.Workouts)
+
+            var sessions = _context.WorkoutSessions
+                .Include(ws => ws.ExerciseSets)
+                .ThenInclude(es => es.Exercise)
+                .ToList();
+
+
+            foreach (var session in sessions)
             {
                 var sessionPanel = new StackPanel
                 {

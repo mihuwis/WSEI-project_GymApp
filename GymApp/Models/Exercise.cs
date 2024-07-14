@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
+
 
 namespace GymApp.Models
 {
@@ -17,6 +14,7 @@ namespace GymApp.Models
 
         public TrainingEquipement TrainingEquipement { get; set; }
 
+        [NotMapped]
         public List<BodyPart> BodyParts { get; set; }
 
         public Exercise() { }
@@ -28,6 +26,18 @@ namespace GymApp.Models
             ExerciseName = exerciseName;
             TrainingEquipement = trainingEquipement;
             BodyParts = bodyParts;
+        }
+
+        public Exercise(int exerciseId, string exerciseName, int trainingEquipementId, List<int> bodyPartIds)
+        {
+            ExerciseId = exerciseId;
+            ExerciseName = exerciseName;
+            TrainingEquipement = new TrainingEquipement { EquipementID = trainingEquipementId };
+            BodyParts = new List<BodyPart>();
+            foreach (var id in bodyPartIds)
+            {
+                BodyParts.Add(new BodyPart { BodyPartID = id });
+            }
         }
     }
 }

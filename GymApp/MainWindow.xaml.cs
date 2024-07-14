@@ -1,4 +1,4 @@
-﻿using GymApp.Context;
+﻿using GymApp.Data;
 using System.Text;
 using GymApp.Models;
 using System.Windows;
@@ -19,15 +19,16 @@ namespace GymApp
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ServiceProvider _serviceProvider;
+        private readonly GymAppContext _context;
+        private readonly IServiceProvider _serviceProvider;
 
-        public MainWindow()
+        public MainWindow(IServiceProvider serviceProvider, GymAppContext context)
         {
             InitializeComponent();
-            _serviceProvider = ((App)Application.Current).ServiceProvider;
+            _serviceProvider = serviceProvider;
+            _context = context;
             NavigateToLogBookPage();
         }
-
 
         private void TrainingMenu_Click(object sender, RoutedEventArgs e)
         {

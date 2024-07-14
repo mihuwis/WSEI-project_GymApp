@@ -1,4 +1,4 @@
-﻿using GymApp.Context;
+﻿using GymApp.Data;
 using GymApp.Models;
 using LiveCharts;
 using LiveCharts.Wpf;
@@ -17,12 +17,12 @@ namespace GymApp
     public partial class StatisticsPage : Page
     {
 
-        private readonly BootstrapDB _database;
+        private readonly GymAppContext _context;
 
-        public StatisticsPage(BootstrapDB database)
+        public StatisticsPage(GymAppContext context)
         {
             InitializeComponent();
-            _database = database;
+            _context = context;
 
             EndDatePicker.SelectedDate = DateTime.Now;
             StartDatePicker.SelectedDate = DateTime.Now.AddMonths(-3);
@@ -37,7 +37,7 @@ namespace GymApp
                 DateTime startDate = StartDatePicker.SelectedDate.Value;
                 DateTime endDate = EndDatePicker.SelectedDate.Value;
 
-                var filteredSessions = _database.Workouts
+                var filteredSessions = _context.WorkoutSessions
                     .Where(session => session.TimeStarted.Date >= startDate && session.TimeStarted.Date <= endDate)
                     .ToList();
 
@@ -50,7 +50,7 @@ namespace GymApp
             DateTime startDate = StartDatePicker.SelectedDate ?? DateTime.Now.AddMonths(-3);
             DateTime endDate = EndDatePicker.SelectedDate ?? DateTime.Now;
 
-            var filteredSessions = _database.Workouts
+            var filteredSessions = _context.WorkoutSessions
                 .Where(session => session.TimeStarted.Date >= startDate && session.TimeStarted.Date <= endDate)
                 .ToList();
 

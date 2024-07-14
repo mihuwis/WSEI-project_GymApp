@@ -1,19 +1,11 @@
-﻿using GymApp.Context;
+﻿using GymApp.Data;
 using GymApp.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace GymApp
@@ -22,15 +14,15 @@ namespace GymApp
 
     public partial class TrainingPage : Page
     {
-        private readonly BootstrapDB _database;
+        private readonly GymAppContext _context;
         private DispatcherTimer _timer;
         private DateTime _sessionStartTime;
         private List<ExerciseSet> _currentExerciseSets;
 
-        public TrainingPage(BootstrapDB database)
+        public TrainingPage(GymAppContext context)
         {
             InitializeComponent();
-            _database = database;
+            _context = context;
             _timer = new DispatcherTimer();
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += Timer_Tick;
@@ -66,13 +58,13 @@ namespace GymApp
             var sessionEndTime = DateTime.Now;
             var workoutSession = new WorkoutSession
             {
-                WorkoutSessionId = _database.Workouts.Count + 1,
                 TimeStarted = _sessionStartTime,
                 TimeFinished = sessionEndTime,
                 ExerciseSets = new List<ExerciseSet>(_currentExerciseSets) 
             };
 
-            _database.Workouts.Add(workoutSession);
+            _context.WorkoutSessions.Add(workoutSession);
+            _context.SaveChanges();
             MessageBox.Show("Training session saved!");
 
             // Reset UI
@@ -92,7 +84,7 @@ namespace GymApp
             var exerciseComboBox = new ComboBox
             {
                 Width = 150,
-                ItemsSource = _database.Exercises,
+                ItemsSource = _context.Exercises.ToList(),
                 DisplayMemberPath = "ExerciseName"
             };
             exerciseSetPanel.Children.Add(exerciseComboBox);
@@ -149,7 +141,12 @@ namespace GymApp
                     int.TryParse(weightTextBox.Text, out var weight) &&
                     int.TryParse(repetitionsTextBox.Text, out var repetitions))
                 {
-                    _currentExerciseSets.Add(new ExerciseSet(_currentExerciseSets.Count + 1, selectedExercise, repetitions, weight));
+                    _currentExerciseSets.Add(new ExerciseSet
+                    {
+                        Exercise = selectedExercise,
+                        Weight = weight,
+                        Repetitions = repetitions
+                    });
                     exerciseComboBox.IsEnabled = false;
                     weightTextBox.IsEnabled = false;
                     repetitionsTextBox.IsEnabled = false;

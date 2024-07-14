@@ -4,6 +4,7 @@ using System.Threading;
 using System.Windows;
 using GymApp.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace GymApp
 {
@@ -22,7 +23,9 @@ namespace GymApp
         private void ConfigureServices(ServiceCollection services)
         {
             services.AddDbContext<GymAppContext>(options =>
-                options.UseSqlite("Data Source=gymapp.db")); // Configure SQLite
+                options.UseSqlite("Data Source=gymapp.db")
+                       .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
+                       .EnableSensitiveDataLogging());
             services.AddSingleton<MainWindow>();
             services.AddTransient<LogBookPage>();
             services.AddTransient<TrainingPage>();

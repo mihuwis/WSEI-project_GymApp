@@ -10,8 +10,11 @@ namespace GymApp.Models
         [Key]
         public int ExerciseId { get; set; }
 
-        public string ExerciseName { get; set;}
+        public string ExerciseName { get; set; }
 
+        public int TrainingEquipementId { get; set; }
+
+        [ForeignKey("TrainingEquipementId")]
         public TrainingEquipement TrainingEquipement { get; set; }
 
         [NotMapped]
@@ -19,12 +22,11 @@ namespace GymApp.Models
 
         public Exercise() { }
 
-        public Exercise(int exerciseId, string exerciseName, 
-            TrainingEquipement trainingEquipement, List<BodyPart> bodyParts)
+        public Exercise(int exerciseId, string exerciseName, int trainingEquipementId, List<BodyPart> bodyParts)
         {
             ExerciseId = exerciseId;
             ExerciseName = exerciseName;
-            TrainingEquipement = trainingEquipement;
+            TrainingEquipementId = trainingEquipementId;
             BodyParts = bodyParts;
         }
 
@@ -32,7 +34,7 @@ namespace GymApp.Models
         {
             ExerciseId = exerciseId;
             ExerciseName = exerciseName;
-            TrainingEquipement = new TrainingEquipement { EquipementID = trainingEquipementId };
+            TrainingEquipementId = trainingEquipementId;
             BodyParts = new List<BodyPart>();
             foreach (var id in bodyPartIds)
             {

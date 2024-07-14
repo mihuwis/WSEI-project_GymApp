@@ -27,6 +27,8 @@ namespace GymApp
             _timer.Interval = TimeSpan.FromSeconds(1);
             _timer.Tick += Timer_Tick;
             _currentExerciseSets = new List<ExerciseSet>();
+
+            TestDatabaseConnection(); // Dodaj test odczytu danych
         }
 
         private void StartSessionButton_Click(object sender, RoutedEventArgs e)
@@ -163,5 +165,17 @@ namespace GymApp
 
             ExerciseSetsPanel.Children.Add(exerciseSetPanel);
         }
+
+
+
+        private void TestDatabaseConnection()
+        {
+            var sessions = _context.WorkoutSessions.ToList();
+            foreach (var session in sessions)
+            {
+                MessageBox.Show($"Session {session.WorkoutSessionId}: {session.TimeStarted} - {session.TimeFinished}");
+            }
+        }
     }
+
 }

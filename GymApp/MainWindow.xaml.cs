@@ -28,6 +28,7 @@ namespace GymApp
             _serviceProvider = serviceProvider;
             _context = context;
             NavigateToLogBookPage();
+            TestDatabaseConnection(); // Dodajemy test odczytu danych
         }
 
         private void TrainingMenu_Click(object sender, RoutedEventArgs e)
@@ -52,5 +53,13 @@ namespace GymApp
             MainFrame.Navigate(logBookPage);
         }
 
+        private void TestDatabaseConnection()
+        {
+            var sessions = _context.WorkoutSessions.ToList();
+            foreach (var session in sessions)
+            {
+                MessageBox.Show($"Session {session.WorkoutSessionId}: {session.TimeStarted} - {session.TimeFinished}");
+            }
+        }
     }
 }

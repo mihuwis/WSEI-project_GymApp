@@ -19,6 +19,8 @@ namespace GymApp
         {
             InitializeComponent();
             _context = context;
+            var connectionString = context.Database.GetDbConnection().ConnectionString;
+            MessageBox.Show($"Database Path: {connectionString}");
             LoadWorkoutSessions();
         }
 
@@ -26,11 +28,20 @@ namespace GymApp
         {
             WorkoutSessionsPanel.Children.Clear();
 
+            // Testowanie zapytania bez Include
+            var workoutSessions = _context.WorkoutSessions.ToList();
+            if (workoutSessions == null || workoutSessions.Count == 0)
+            {
+                MessageBox.Show("No workout sessions found.");
+                return;
+            }
+
+            MessageBox.Show($"Found {workoutSessions.Count} workout sessions.");
+
             var sessions = _context.WorkoutSessions
                 .Include(ws => ws.ExerciseSets)
                 .ThenInclude(es => es.Exercise)
                 .ToList();
-
 
             foreach (var session in sessions)
             {
@@ -47,7 +58,7 @@ namespace GymApp
 
                 var sessionHeader = new TextBlock
                 {
-                    Text = $"Training: {session.TimeStarted.ToString("yyyy-MM-dd HH:mm")}", 
+                    Text = $"Training: {session.TimeStarted.ToString("yyyy-MM-dd HH:mm")}",
                     FontWeight = FontWeights.Bold,
                     Margin = new Thickness(5)
                 };

@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using GymApp.Models;
+using Microsoft.Extensions.Logging;
 
 namespace GymApp.Data
 {
@@ -13,11 +14,18 @@ namespace GymApp.Data
         public DbSet<TrainingEquipement> TrainingEquipements { get; set; }
         public DbSet<BodyPart> BodyParts { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder
+                .UseSqlite("Data Source=gymapp.db")
+                .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
+                .EnableSensitiveDataLogging();
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            // Add the seed data here
             modelBuilder.Entity<TrainingEquipement>().HasData(
                 new TrainingEquipement(1, "Barbell"),
                 new TrainingEquipement(2, "Dumbell"),
@@ -47,67 +55,71 @@ namespace GymApp.Data
             );
 
             modelBuilder.Entity<WorkoutSession>().HasData(
-               new WorkoutSession
-               {
-                   WorkoutSessionId = 1,
-                   TimeStarted = new DateTime(2024, 5, 1, 18, 0, 0),
-                   TimeFinished = new DateTime(2024, 5, 1, 19, 0, 0)
-               },
-               new WorkoutSession
-               {
-                   WorkoutSessionId = 2,
-                   TimeStarted = new DateTime(2024, 5, 10, 18, 0, 0),
-                   TimeFinished = new DateTime(2024, 5, 10, 19, 0, 0)
-               },
-               new WorkoutSession
-               {
-                   WorkoutSessionId = 3,
-                   TimeStarted = new DateTime(2024, 5, 20, 18, 0, 0),
-                   TimeFinished = new DateTime(2024, 5, 20, 19, 0, 0)
-               },
-               new WorkoutSession
-               {
-                   WorkoutSessionId = 4,
-                   TimeStarted = new DateTime(2024, 6, 5, 18, 0, 0),
-                   TimeFinished = new DateTime(2024, 6, 5, 19, 0, 0)
-               },
-               new WorkoutSession
-               {
-                   WorkoutSessionId = 5,
-                   TimeStarted = new DateTime(2024, 6, 15, 18, 0, 0),
-                   TimeFinished = new DateTime(2024, 6, 15, 19, 0, 0)
-               },
-               new WorkoutSession
-               {
-                   WorkoutSessionId = 6,
-                   TimeStarted = new DateTime(2024, 6, 25, 18, 0, 0),
-                   TimeFinished = new DateTime(2024, 6, 25, 19, 0, 0)
-               },
-               new WorkoutSession
-               {
-                   WorkoutSessionId = 7,
-                   TimeStarted = new DateTime(2024, 7, 5, 18, 0, 0),
-                   TimeFinished = new DateTime(2024, 7, 5, 19, 0, 0)
-               },
-               new WorkoutSession
-               {
-                   WorkoutSessionId = 8,
-                   TimeStarted = new DateTime(2024, 7, 15, 18, 0, 0),
-                   TimeFinished = new DateTime(2024, 7, 15, 19, 0, 0)
-               }
-           );
+                new WorkoutSession
+                {
+                    WorkoutSessionId = 1,
+                    TimeStarted = new DateTime(2024, 5, 1, 18, 0, 0),
+                    TimeFinished = new DateTime(2024, 5, 1, 19, 0, 0)
+                },
+                new WorkoutSession
+                {
+                    WorkoutSessionId = 2,
+                    TimeStarted = new DateTime(2024, 5, 10, 18, 0, 0),
+                    TimeFinished = new DateTime(2024, 5, 10, 19, 0, 0)
+                },
+                new WorkoutSession
+                {
+                    WorkoutSessionId = 3,
+                    TimeStarted = new DateTime(2024, 5, 20, 18, 0, 0),
+                    TimeFinished = new DateTime(2024, 5, 20, 19, 0, 0)
+                },
+                new WorkoutSession
+                {
+                    WorkoutSessionId = 4,
+                    TimeStarted = new DateTime(2024, 6, 5, 18, 0, 0),
+                    TimeFinished = new DateTime(2024, 6, 5, 19, 0, 0)
+                },
+                new WorkoutSession
+                {
+                    WorkoutSessionId = 5,
+                    TimeStarted = new DateTime(2024, 6, 15, 18, 0, 0),
+                    TimeFinished = new DateTime(2024, 6, 15, 19, 0, 0)
+                },
+                new WorkoutSession
+                {
+                    WorkoutSessionId = 6,
+                    TimeStarted = new DateTime(2024, 6, 25, 18, 0, 0),
+                    TimeFinished = new DateTime(2024, 6, 25, 19, 0, 0)
+                },
+                new WorkoutSession
+                {
+                    WorkoutSessionId = 7,
+                    TimeStarted = new DateTime(2024, 7, 5, 18, 0, 0),
+                    TimeFinished = new DateTime(2024, 7, 5, 19, 0, 0)
+                },
+                new WorkoutSession
+                {
+                    WorkoutSessionId = 8,
+                    TimeStarted = new DateTime(2024, 7, 15, 18, 0, 0),
+                    TimeFinished = new DateTime(2024, 7, 15, 19, 0, 0)
+                }
+            );
 
-                modelBuilder.Entity<ExerciseSet>().HasData(
-                    // Add ExerciseSets for each WorkoutSession as in your example data
-                    new ExerciseSet(1, 1, 10, 100),
-                    new ExerciseSet(2, 1, 8, 90),
-                    new ExerciseSet(3, 1, 6, 85)
-                    // Add the rest of your ExerciseSets here...
-                );
+            modelBuilder.Entity<ExerciseSet>().HasData(
+                new ExerciseSet { ExerciseSetId = 1, ExerciseId = 1, WorkoutSessionId = 1, Repetitions = 10, Weight = 100 },
+                new ExerciseSet { ExerciseSetId = 2, ExerciseId = 2, WorkoutSessionId = 1, Repetitions = 8, Weight = 90 },
+                new ExerciseSet { ExerciseSetId = 3, ExerciseId = 3, WorkoutSessionId = 1, Repetitions = 6, Weight = 85 }
+            );
 
+            modelBuilder.Entity<ExerciseSet>()
+                .HasOne(es => es.WorkoutSession)
+                .WithMany(ws => ws.ExerciseSets)
+                .HasForeignKey(es => es.WorkoutSessionId);
 
-
-        }
+            modelBuilder.Entity<ExerciseSet>()
+                .HasOne(es => es.Exercise)
+                .WithMany()
+                .HasForeignKey(es => es.ExerciseId);
         }
     }
-
+}

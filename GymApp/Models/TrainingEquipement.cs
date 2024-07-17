@@ -11,6 +11,7 @@ namespace GymApp.Models
         public int EquipementID { get; set; }
         public string EquipementName { get; set; }
 
+        public TrainingEquipement() { }
         public TrainingEquipement(int id, string equipementName)
         {
             EquipementID = id;

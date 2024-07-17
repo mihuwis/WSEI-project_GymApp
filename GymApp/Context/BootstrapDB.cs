@@ -6,7 +6,7 @@ namespace GymApp.Context
 {
     public class BootstrapDB
     {
-        public List<WorkoutSession> Workouts { get; set; }
+        public virtual List<WorkoutSession> Workouts { get; set; }
         public List<TrainingEquipement> TrainingEquipements { get; set; }
         public List<BodyPart> BodyParts { get; set; }
         public List<Exercise> Exercises { get; set; }

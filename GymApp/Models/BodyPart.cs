@@ -12,6 +12,8 @@ namespace GymApp.Models
         
         public string BodyPartName { get; set;}
 
+        public BodyPart() { }
+
         public BodyPart(int bodyPartID, string bodyPartName)
         {
             BodyPartID = bodyPartID;

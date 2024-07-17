@@ -16,6 +16,8 @@ namespace GymApp.Models
 
         public float Weight { get; set; }
 
+        public ExerciseSet() { }
+
         public ExerciseSet(int exerciseSetId, Exercise exerciseExecuted)
         {
             ExerciseSetId = exerciseSetId;

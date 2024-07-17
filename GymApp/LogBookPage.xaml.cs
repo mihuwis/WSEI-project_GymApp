@@ -10,10 +10,17 @@ using System.Windows.Shapes;
 
 namespace GymApp
 {
+    /// <summary>
+    /// Represents the logbook page where users can view their workout sessions.
+    /// </summary>
     public partial class LogBookPage : Page
     {
         private readonly BootstrapDB _database;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="LogBookPage"/> class.
+        /// </summary>
+        /// <param name="database">The database containing workout information.</param>
         public LogBookPage(BootstrapDB database)
         {
             InitializeComponent();
@@ -21,6 +28,9 @@ namespace GymApp
             LoadWorkoutSessions();
         }
 
+        /// <summary>
+        /// Loads the workout sessions from the database and displays them on the page.
+        /// </summary>
         public void LoadWorkoutSessions()
         {
             WorkoutSessionsPanel.Children.Clear();
@@ -34,12 +44,12 @@ namespace GymApp
                         Colors.LightGreen,
                         Colors.White,
                         new Point(0, 0),
-                        new Point(1, 0)) // Gradient z lewej do prawej 
+                        new Point(1, 0)) // Gradient from left to right
                 };
 
                 var sessionHeader = new TextBlock
                 {
-                    Text = $"Training: {session.TimeStarted.ToString("yyyy-MM-dd HH:mm")}", 
+                    Text = $"Training: {session.TimeStarted.ToString("yyyy-MM-dd HH:mm")}",
                     FontWeight = FontWeights.Bold,
                     Margin = new Thickness(5)
                 };
@@ -71,5 +81,4 @@ namespace GymApp
             }
         }
     }
-
 }

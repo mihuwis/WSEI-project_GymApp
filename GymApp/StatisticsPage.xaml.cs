@@ -16,9 +16,12 @@ namespace GymApp
     /// </summary>
     public partial class StatisticsPage : Page
     {
-
         private readonly BootstrapDB _database;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StatisticsPage"/> class.
+        /// </summary>
+        /// <param name="database">The database containing workout and exercise information.</param>
         public StatisticsPage(BootstrapDB database)
         {
             InitializeComponent();
@@ -30,6 +33,12 @@ namespace GymApp
             DisplayStatisticsForDefaultDateRange();
         }
 
+        /// <summary>
+        /// Handles the SelectedDateChanged event of the DatePicker control.
+        /// Filters and displays workout sessions based on the selected date range.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void DatePicker_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             if (StartDatePicker.SelectedDate.HasValue && EndDatePicker.SelectedDate.HasValue)
@@ -45,6 +54,9 @@ namespace GymApp
             }
         }
 
+        /// <summary>
+        /// Displays statistics for the default date range (last 3 months).
+        /// </summary>
         private void DisplayStatisticsForDefaultDateRange()
         {
             DateTime startDate = StartDatePicker.SelectedDate ?? DateTime.Now.AddMonths(-3);
@@ -57,6 +69,10 @@ namespace GymApp
             DisplayStatistics(filteredSessions);
         }
 
+        /// <summary>
+        /// Displays statistics for the given workout sessions.
+        /// </summary>
+        /// <param name="sessions">The list of workout sessions to display statistics for.</param>
         private void DisplayStatistics(List<WorkoutSession> sessions)
         {
             // Display the number of training sessions
@@ -116,6 +132,11 @@ namespace GymApp
             PlotChart(sessions, totalLoads);
         }
 
+        /// <summary>
+        /// Plots a chart displaying the total load for each workout session.
+        /// </summary>
+        /// <param name="sessions">The list of workout sessions.</param>
+        /// <param name="totalLoads">The total loads for each session.</param>
         private void PlotChart(List<WorkoutSession> sessions, List<double> totalLoads)
         {
             ChartGrid.Children.Clear();

@@ -18,8 +18,9 @@ using System.Windows.Threading;
 
 namespace GymApp
 {
-
-
+    /// <summary>
+    /// Represents the training page where users can start and track their workout sessions.
+    /// </summary>
     public partial class TrainingPage : Page
     {
         private readonly BootstrapDB _database;
@@ -27,6 +28,10 @@ namespace GymApp
         private DateTime _sessionStartTime;
         private List<ExerciseSet> _currentExerciseSets;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TrainingPage"/> class.
+        /// </summary>
+        /// <param name="database">The database containing workout and exercise information.</param>
         public TrainingPage(BootstrapDB database)
         {
             InitializeComponent();
@@ -37,6 +42,11 @@ namespace GymApp
             _currentExerciseSets = new List<ExerciseSet>();
         }
 
+        /// <summary>
+        /// Starts a new training session.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void StartSessionButton_Click(object sender, RoutedEventArgs e)
         {
             _sessionStartTime = DateTime.Now;
@@ -49,17 +59,32 @@ namespace GymApp
             AddExerciseSetControl();
         }
 
+        /// <summary>
+        /// Updates the session timer each second.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void Timer_Tick(object sender, EventArgs e)
         {
             var elapsed = DateTime.Now - _sessionStartTime;
             TimerTextBlock.Text = elapsed.ToString(@"hh\:mm\:ss");
         }
 
+        /// <summary>
+        /// Adds another set of exercises to the current session.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void AddMoreSetsButton_Click(object sender, RoutedEventArgs e)
         {
             AddExerciseSetControl();
         }
 
+        /// <summary>
+        /// Stops the current training session and saves it to the database.
+        /// </summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The event data.</param>
         private void StopSessionButton_Click(object sender, RoutedEventArgs e)
         {
             _timer.Stop();
@@ -69,7 +94,7 @@ namespace GymApp
                 WorkoutSessionId = _database.Workouts.Count + 1,
                 TimeStarted = _sessionStartTime,
                 TimeFinished = sessionEndTime,
-                ExerciseSets = new List<ExerciseSet>(_currentExerciseSets) 
+                ExerciseSets = new List<ExerciseSet>(_currentExerciseSets)
             };
 
             _database.Workouts.Add(workoutSession);
@@ -85,6 +110,9 @@ namespace GymApp
             _currentExerciseSets.Clear();
         }
 
+        /// <summary>
+        /// Adds a new control for entering exercise set details.
+        /// </summary>
         private void AddExerciseSetControl()
         {
             var exerciseSetPanel = new StackPanel { Orientation = Orientation.Horizontal, Margin = new Thickness(5) };

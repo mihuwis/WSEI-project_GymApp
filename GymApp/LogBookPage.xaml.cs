@@ -20,7 +20,7 @@ namespace GymApp
             InitializeComponent();
             _context = context;
             var connectionString = context.Database.GetDbConnection().ConnectionString;
-            MessageBox.Show($"Database Path: {connectionString}");
+            MessageBox.Show($"Database Path: {System.IO.Path.GetFullPath(connectionString)}");
             LoadWorkoutSessions();
         }
 
@@ -28,7 +28,26 @@ namespace GymApp
         {
             WorkoutSessionsPanel.Children.Clear();
 
-            // Testowanie zapytania bez Include
+            var connection = _context.Database.GetDbConnection();
+            connection.Open();
+            MessageBox.Show($"Database State: {connection.State}");
+
+            var commandText = "SELECT name FROM sqlite_master WHERE type='table';";
+            using (var command = _context.Database.GetDbConnection().CreateCommand())
+            {
+                command.CommandText = commandText;
+                _context.Database.OpenConnection();
+                using (var result = command.ExecuteReader())
+                {
+                    var tables = new List<string>();
+                    while (result.Read())
+                    {
+                        tables.Add(result.GetString(0));
+                    }
+                    MessageBox.Show($"Tables in database: {string.Join(", ", tables)}");
+                }
+            }
+
             var workoutSessions = _context.WorkoutSessions.ToList();
             if (workoutSessions == null || workoutSessions.Count == 0)
             {

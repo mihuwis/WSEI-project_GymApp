@@ -12,6 +12,7 @@ namespace GymApp.Models
     {
         [Key]
         public int EquipementID { get; set; }
+        [Required]
         public string EquipementName { get; set; }
 
         public TrainingEquipement() { }

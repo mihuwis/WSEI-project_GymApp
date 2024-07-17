@@ -10,8 +10,10 @@ namespace GymApp.Models
         [Key]
         public int ExerciseId { get; set; }
 
+        [Required]
         public string ExerciseName { get; set; }
 
+        [Required]
         public int TrainingEquipementId { get; set; }
 
         [ForeignKey("TrainingEquipementId")]

@@ -14,6 +14,8 @@ namespace GymApp.Models
         public int ExerciseSetId { get; set; }
 
         public int ExerciseId { get; set; }
+
+        [Required]
         public Exercise Exercise { get; set; }
 
         public int Repetitions { get; set; }
@@ -21,14 +23,27 @@ namespace GymApp.Models
         public float Weight { get; set; }
 
         public int WorkoutSessionId { get; set; }
+
+        [Required]
         public WorkoutSession WorkoutSession { get; set; }
 
         public ExerciseSet() { }
 
-        public ExerciseSet(int exerciseSetId, int exerciseId, int workoutSessionId, int repetitions, float weight)
+        public ExerciseSet(int exerciseSetId, Exercise exerciseExecuted)
         {
             ExerciseSetId = exerciseSetId;
-            ExerciseId = exerciseId;
+            Exercise = exerciseExecuted;
+        }
+
+        public ExerciseSet(int exerciseSetId, Exercise exerciseExecuted, int repetitions, float weight) : this(exerciseSetId, exerciseExecuted)
+        {
+            Repetitions = repetitions;
+            Weight = weight;
+        }
+
+        public ExerciseSet(int exerciseSetId, int workoutSessionId, int repetitions, float weight)
+        {
+            ExerciseSetId = exerciseSetId;
             WorkoutSessionId = workoutSessionId;
             Repetitions = repetitions;
             Weight = weight;

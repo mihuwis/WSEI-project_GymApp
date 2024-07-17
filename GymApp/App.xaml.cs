@@ -22,11 +22,14 @@ namespace GymApp
 
         private void ConfigureServices(ServiceCollection services)
         {
+            // Caly czas uzywa bazy w bin ??!!! jak to zmienic ? 
+            string dbPath = System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "..\\..\\..\\gymapp.db");
+            MessageBox.Show($"Sciezka {dbPath}");
+
             services.AddDbContext<GymAppContext>(options =>
-                options.UseSqlite("Data Source=gymapp.db")
-                       .UseLoggerFactory(LoggerFactory.Create(builder => builder.AddConsole()))
-                       .EnableSensitiveDataLogging());
-            services.AddSingleton<MainWindow>();
+                options.UseSqlite($"Data Source={dbPath}")); // Configure SQLite
+
+            services.AddSingleton<MainWindow>(); // Rejestracja MainWindow jako singleton
             services.AddTransient<LogBookPage>();
             services.AddTransient<TrainingPage>();
             services.AddTransient<StatisticsPage>();
@@ -47,6 +50,14 @@ namespace GymApp
             }
 
             var mainWindow = serviceProvider.GetService<MainWindow>();
+            if (mainWindow == null)
+            {
+                MessageBox.Show("MainWindow is not registered in the service provider.");
+                Application.Current.Shutdown();
+                return;
+            }
+
+            MessageBox.Show("MainWindow successfully retrieved from service provider.");
             mainWindow.Show();
         }
 

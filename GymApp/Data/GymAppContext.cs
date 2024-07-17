@@ -6,7 +6,11 @@ namespace GymApp.Data
 {
     public class GymAppContext : DbContext
     {
-        public GymAppContext(DbContextOptions<GymAppContext> options) : base(options) { }
+        public GymAppContext(DbContextOptions<GymAppContext> options) : base(options)
+        {
+            var connectionString = Database.GetDbConnection().ConnectionString;
+            System.Diagnostics.Debug.WriteLine($"Database Path: {System.IO.Path.GetFullPath(connectionString)}");
+        }
 
         public DbSet<WorkoutSession> WorkoutSessions { get; set; }
         public DbSet<Exercise> Exercises { get; set; }

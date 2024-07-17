@@ -28,7 +28,7 @@ namespace GymApp
             _serviceProvider = serviceProvider;
             _context = context;
             NavigateToLogBookPage();
-            TestDatabaseConnection(); // Dodajemy test odczytu danych
+            TestDatabaseConnection(); //  test odczytu danych
         }
 
         private void TrainingMenu_Click(object sender, RoutedEventArgs e)
